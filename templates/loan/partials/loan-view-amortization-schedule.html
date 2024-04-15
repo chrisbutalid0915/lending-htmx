@@ -1,0 +1,67 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+	<div class="modal-underlay" _="on click trigger closeModal"></div>
+	<div class="modal-content block">
+        <span class="close" _="on click trigger closeModal">&times;</span>
+		<h2 class="text-base font-semibold leading-7 text-gray-900">Amortization Schedule</h2>
+        
+        
+
+    <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+        
+        <div id="no-more-tables" class="col-span-full">
+            <table class="mt-2 min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-6">Term</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Principal</th>
+                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Interest</th>
+                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Total</th>
+                    <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Balance</th>
+                  </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white" >
+                <tr>
+                    <td data-title="Term" class="whitespace-nowrap py-4 pl-4 pr-3 text-right text-sm font-medium text-gray-900 sm:pl-6"></td>
+                    <td data-title="Date" class="whitespace-nowrap text-left px-3 py-4 text-sm text-gray-500"></td>
+                    <td data-title="Principal" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500"></td>
+                    <td data-title="Interest" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500"></td>
+                    <td data-title="Total" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500"></td>
+                    <td data-title="Balance" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500">{{ total_principal|floatformat:2 }}</td>
+                </tr>
+                {% for amort in amortization %}
+                    <tr>
+                        <td data-title="Term" class="whitespace-nowrap py-4 pl-4 pr-3 text-right text-sm font-medium text-gray-900 sm:pl-6">{{ amort.term }}</td>
+                        <td data-title="Date" class="whitespace-nowrap text-left px-3 py-4 text-sm text-gray-500">{{ amort.maturity_date }}</td>
+                        <td data-title="Principal" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500">{{ amort.principal_amount|floatformat:2 }}</td>
+                        <td data-title="Interest" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500">{{ amort.interest_amount|floatformat:2 }}</td>
+                        <td data-title="Total" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500">{{ amort.total|floatformat:2 }}</td>
+                        <td data-title="Balance" class="whitespace-nowrap text-right px-3 py-4 text-sm text-gray-500">{{ amort.running_balance|floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                      <th  data-title="Total Principal Amount"  scope="row" colspan="3" class="hidden pl-5 pr-4 pt-6 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Total Principal Amount</th>
+                      <!-- <th scope="row" class="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">Total Principal Amount</th> -->
+                      <td class="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-0">P{{ total_principal|floatformat:2 }}<td>
+                    </tr>
+                    <tr>
+                      <th data-title="Total Interest Amount" scope="row" colspan="3" class="hidden pl-5 pr-4 pt-4 text-right text-sm font-normal text-gray-500 sm:table-cell sm:pl-0">Total Interest Amount</th>
+                      <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-normal text-gray-500 sm:hidden">Total Interest Amount</th> -->
+                      <td   class="pl-3 pr-4 pt-4 text-right text-sm text-gray-500 sm:pr-0">P{{ total_interest|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                      <th data-title="Total" scope="row" colspan="3" class="hidden pl-5 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0">Total</th>
+                      <!-- <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th> -->
+                      <td class="pl-3 pr-4 pt-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">P{{ total|floatformat:2 }}</td>
+                    </tr>
+                  </tfoot>
+              </table>
+        </div>
+        
+    </div>
+</div>
+		<button _="on click trigger closeModal">Close</button>
+	</div>

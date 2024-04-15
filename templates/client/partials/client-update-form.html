@@ -1,0 +1,7 @@
+<form hx-encoding="multipart/form-data"
+      hx-post="{% url 'clients:update-client' client.pk %}"
+      hx-target="#client-view"
+        >
+    {% csrf_token %}
+    {% include 'client/partials/client-fields.html' %}
+</form>

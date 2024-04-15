@@ -1,0 +1,13 @@
+<div class="space-y-16 py-16 xl:space-y-20">
+    <!-- Recent activity table -->
+    <div id="recent-loan" hx-get="{% url 'dashboard:recent-loan' %}" hx-trigger="revealed" hx-target="this">
+    </div>
+
+    <!-- Recent payment -->
+    <div id="recent-payment" hx-get="{% url 'dashboard:recent-payment' %}" hx-trigger="revealed" hx-target="this">
+    </div>
+
+    <!-- Recent client list-->
+    <div id="recent-client" hx-get="{% url 'dashboard:recent-client' %}" hx-trigger="revealed" hx-target="this">
+    </div>
+</div>

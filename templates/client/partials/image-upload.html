@@ -1,0 +1,46 @@
+{% load static %}
+{% load widget_tweaks %}
+<label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Photo</label>
+<div class="mt-2 block items-center gap-x-3">
+    <svg id="imagePreviewContainer" class="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <img id="imagePreview"
+                {% if client.photo %}
+                    src="{{ client.photo.url }}"
+                {% else %}
+                    src="{% static 'images/default_image.png' %}"
+                {% endif %}
+            alt="Image Preview" style="max-width: 150px; max-height: 150px;">
+    </svg>
+    
+        {% render_field forms.photo onchange="previewImage(event)" class="mt-2" %}
+        {{ forms.photo.errors }}
+
+</div>
+
+
+<script>
+    // load page
+    {}
+    window.onload = resetImage
+    // reset image
+    function resetImage() {
+        document.getElementById('photo').value = "";
+    }
+    // Function to preview the selected image
+    function previewImage(event) {
+        var input = event.target;
+        // Check if a file was selected
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Display the preview image
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.src = e.target.result;
+            };
+            // Read the selected image as a data URL
+            reader.readAsDataURL(input.files[0]);
+            // Show the image preview container
+            document.getElementById('imagePreviewContainer').style.display = 'block';
+        }
+    }
+</script>

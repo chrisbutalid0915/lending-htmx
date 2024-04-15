@@ -1,0 +1,6 @@
+<form hx-encoding="multipart/form-data"
+        hx-post="{% url 'collectors:update-collector' collector.pk %}"
+        hx-target="#collector-view">
+    {% csrf_token %}
+    {% include 'collector/partials/collector-fields.html' %}
+</form>

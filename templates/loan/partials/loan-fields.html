@@ -1,0 +1,75 @@
+{% load widget_tweaks %}
+
+<div class="grid grid-cols-1 border-b border-gray-900/10 pb-12 md:grid-cols-2 flex items-center justify-end gap-x-6 border-t border-gray-900/10  py-4 bg-gray-50 text-white py-4 px-6 sticky top-0 z-50">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-gray-900">
+        {% if forms.client.value %}
+          {{ loan.loan_number }}
+        {% else %}
+          New Loan Application
+        {% endif %}
+      </h2>
+    </div>
+    
+    <div class="text-right inline-flow">
+      <span class="p-4">
+        <a href="{% url 'loans:loans' %}" class="text-sm font-semibold leading-6 text-gray-900">Cancel</a>
+      </span>
+      <button type="submit"
+              class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >Save</button>
+    </div>
+   
+</div>
+
+<div class="grid grid-cols-1 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-4">
+    <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2 pt-5">
+        <div x-data="{ selectedName: '{{ search_client }}', selectedClientID: '{{ client_id }}' }" class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+
+            <div class="col-span-full" x-data="{ open: false }">
+                <label for="combobox" class="block text-sm font-medium leading-6 text-gray-900">Client</label>
+                <div class="relative mt-2">
+                  <input hx-post="{% url 'clients:search-client' %}" :value="selectedName" x-on:focusout="handleFocusOut" x-on:input="open = true"  hx-target="#client-combobox" hx-trigger="keyup changed delay:500ms load" id="search-client" name="search-client" type="text" class="w-full rounded-md border-0 bg-white py-1.5 pl-3 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" role="combobox" aria-controls="options" aria-expanded="false" required>
+                  <input type="text" :value="selectedClientID" name="client" hidden>
+                  <button @click.away="open = false" hx-post="{% url 'clients:search-client' %}"  hx-target="#client-combobox" x-on:click="open = ! open" type="button" class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+    
+                  <div id="client-combobox">
+    
+                  </div>
+                  
+                </div>
+              </div>
+    
+            {% include 'loan/partials/loan-products.html' %}
+    
+            <div class="sm:col-span-4">
+                <label for="amount" class="block text-sm font-medium leading-6 text-gray-900">Amount</label>
+                <div class="mt-2">
+                    {% render_field forms.loan_amount hx-post="/calculate-interest-amount/" hx-target="#loan-interest" hx-push-url="false" class="numeric-input px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %}
+                </div>
+            </div>
+    
+            <div  class="sm:col-span-4">
+                <label for="interest_amount" class="block text-sm font-medium leading-6 text-gray-900">Interest Amount</label>
+                <div id="loan-interest">
+                    {% render_field forms.interest_amount class="numeric-input px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" %}
+                </div>
+            </div>
+    
+      </div>
+    </div>
+</div>
+
+
+<script>
+    
+    function handleFocusOut() {
+        console.log(this.selectedName)
+        var input = document.getElementById('search-client')
+        input.value = this.selectedName;
+    }
+</script>

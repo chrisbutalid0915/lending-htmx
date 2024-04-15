@@ -1,0 +1,77 @@
+<nav class="flex items-center justify-between bg-white py-3" aria-label="Pagination">
+    
+    <div class="pagination gap-x-3">
+        {% if loans.has_previous %}
+            <button hx-post="{% url 'loans:loan-page' 1 %}"
+                    hx-push-url="/loans/"
+                    hx-target="#loan-list"
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                first
+            </button>
+        {% else %}
+            <span disable
+                    class="relative inline-flex items-center rounded-md bg-gray px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                first
+            </span>
+        {% endif %}
+
+        {% if loans.has_previous %}
+            <button hx-post="{% url 'loans:loan-page'  loans.previous_page_number  %}"
+                    hx-push-url="/loans/"
+                    hx-target="#loan-list"
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                previous
+            </button>
+        {% else %}
+            <span disabled
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                previous
+            </span>
+        {% endif %}
+
+
+
+        {% if loans.has_next %}
+            <button hx-post="{% url 'loans:loan-page'  loans.next_page_number  %}"
+                    hx-push-url="/loans/"
+                    hx-target="#loan-list"
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                next
+            </button>
+
+        {% else %}
+            <span disabled
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                next
+            </span>
+        {% endif %}
+
+        {% if loans.has_next %}
+            <button hx-post="{% url 'loans:loan-page'  loans.paginator.num_pages  %}"
+                    hx-push-url="/loans/"
+                    hx-target="#loan-list"
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                last
+            </button>
+        {% else %}
+            <span disabled
+                    class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
+                last
+            </span>
+        {% endif %}
+    </div>
+
+    <div class="flex flex-1 justify-between sm:justify-end mr-4">
+        <p class="text-sm text-gray-700">
+        <span class="font-medium">{{ total_records }}</span>
+        records found
+        </p>
+    </div>
+
+</nav>
+
+<div class="hidden sm:block">
+    <span class="current">
+      Page {{ loans.number }} of {{ loans.paginator.num_pages }}.
+    </span>
+</div>

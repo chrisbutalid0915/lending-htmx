@@ -1,0 +1,16 @@
+{% load widget_tweaks %}
+<div class="col-span-full">
+    <label for="loan_product" class="block text-sm font-medium leading-6 text-gray-900">Loan Product</label>
+    <div class="mt-2">
+    {%  render_field forms.loan_product hx-get="/terms/" hx-target="#terms" hx-push-url="false" class="px-2 bg-white block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %}
+    </div>
+</div>
+
+<div class="col-span-full">
+    <label for="terms" class="block text-sm font-medium leading-6 text-gray-900">Terms</label>
+    <div class="mt-2">
+        <div id="terms">
+            {% include 'loan/partials/loan-terms.html' %}
+        </div>
+   </div>
+</div>

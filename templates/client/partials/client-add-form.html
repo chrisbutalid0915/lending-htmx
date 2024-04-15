@@ -1,0 +1,8 @@
+<form hx-encoding="multipart/form-data"
+        hx-post="{% url 'clients:add-client' %}"      
+        hx-target="#client"
+        >
+    {% csrf_token %}
+    {% include 'client/partials/client-fields.html' %}
+</form>
+

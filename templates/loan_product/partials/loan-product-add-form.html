@@ -1,0 +1,12 @@
+<form hx-encoding="multipart/form-data"
+      hx-post="{% url 'loans:add-loan-product' %}"
+      hx-target="#loan-product"
+    >
+    {% csrf_token %}
+    {% include 'loan_product/partials/loan-product-fields.html' %}
+    <div class="sm:col-span-3 mt-2">
+        <div id="loan-product-list-terms" hx-get="{% url 'loans:add-loan-product-terms' %}" hx-trigger="revealed" hx-target="this">
+    
+        </div>
+    </div>
+</form>

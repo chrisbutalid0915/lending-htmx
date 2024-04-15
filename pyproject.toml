@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "djpoetryboilerplate"
+version = "0.1.0"
+description = "Django Poetry Boilerplate for starting django projects with poetry"
+authors = ["Ray <jenn0pal@yahoo.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.4"
+djangorestframework = "^3.14.0"
+whitenoise = {extras = ["brotli"], version = "^6.5.0"}
+ipython = "^8.14.0"
+psycopg = "^3.1.10"
+django-extensions = "^3.2.3"
+django-structlog = "^5.3.0"
+httpx = "^0.24.1"
+drf-spectacular = {extras = ["sidecar"], version = "^0.26.4"}
+django-environ = "^0.10.0"
+dj-rest-auth = {extras = ["with-social"], version = "^4.0.1"}
+djangorestframework-dataclasses = "^1.2.0"
+django-filter = "^23.2"
+django-debug-toolbar = "^4.2.0"
+pillow = "^10.3.0"
+django-widget-tweaks = "^1.5.0"
+django-htmx = "^1.17.3"
+django-constance = "^3.1.0"
+numpy-financial = "^1.0.0"
+numpy = "^1.26.4"
+python-dateutil = "^2.9.0.post0"
+django-forms-dynamic = "^1.0.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+pytest = "^7.4.0"
+pre-commit = "^3.3.3"
+flake8-isort = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

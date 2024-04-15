@@ -1,0 +1,6 @@
+<form hx-encoding="multipart/form-data"
+        hx-post="{% url 'loans:update-loan' loan.pk %}"
+        hx-target="#loan">
+    {% csrf_token %}
+    {% include 'loan/partials/loan-fields.html' %}
+</form>

@@ -1,0 +1,14 @@
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form  hx-triggger="end" hx-target="#client-result" >
+    {% include 'client/partials/search.html' %}
+    <div id="client-list" hx-post="{% url 'clients:page-client' 1  %}" hx-trigger="revealed" hx-target="this">
+
+    </div>
+</form>

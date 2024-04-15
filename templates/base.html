@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lending</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!--font awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    
+
+    <!-- Custom CSS -->
+
+    <!-- jQuery and Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <!-- Alphine JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <!-- Hyperscript -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+
+    <!-- Required chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+{% if user.is_authenticated %}
+    {% include 'components/navbar.html' %}
+
+     <div class="home-section">
+            <div class="home-content">
+                <i class="fas fa-bars"></i>
+
+                <div class="max-w-7xl px-2 sm:px-4 lg:px-8">
+                    <div class="flex h-16 justify-between">
+                      <div class="hidden lg:ml-4 lg:flex lg:items-center">
+                
+                        <!-- Profile dropdown -->
+                        <div x-data="{ open: false }" @click.away="open = false" class="relative ml-1 flex-shrink-0">
+                          <div >
+                            <button x-on:click="open = ! open" type="button" 
+                                class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                              <span class="absolute -inset-1.5"></span>
+                              <span class="sr-only">Open user menu</span>
+                              <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                              <div class="name ml-2 mt-1.5 mr-2 font-semibold">{{ user.username }}</div>
+                            </button>
+                          </div>
+                
+                          <div :class="[open ? 'transform opacity-100 scale-100': 'transform opacity-0 scale-95', 'absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none']" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="{% url 'users:logout' %}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <!-- Mobile menu, show/hide based on menu state. -->
+                  <div class="lg:hidden" id="mobile-menu">
+                    <div x-data="{ open: false }"  @click.away="open = false" class="relative flex-shrink-0">
+                        <div >
+                          <button x-on:click="open = ! open" type="button" 
+                              class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="absolute -inset-1.5"></span>
+                            <span class="sr-only">Open user menu</span>
+                            <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <div class="name ml-2 mt-1.5 mr-2 font-semibold">{{ user.username }}</div>
+                          </button>
+                        </div>
+              
+                        <div x-show="open" :class="[open ? 'transform opacity-100 scale-100': 'transform opacity-0 scale-95', 'absolute left-0 z-10 mt-2 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none']" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                          <a href="{% url 'users:logout' %}" class="block px-6 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</a>
+                        </div>
+                      </div>
+                  </div>
+            </div>
+
+{% else %}
+     <div>
+{% endif %}
+        <div class="bg-gray-50 p-4">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="rounded-lg border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+                {% block content %}
+            
+                {% endblock %}
+            </div>
+            
+        
+        </div>
+        {% include 'footer.html' %}
+    </div>
+    
+
+<!-- add crsf_token for method delete -->
+<script>
+document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+})
+
+htmx.onLoad(function(content) {
+    var sortables = content.querySelectorAll(".sortable");
+    for (var i = 0; i < sortables.length; i++) {
+        var sortable = sortables[i];
+        new Sortable(sortable, {
+            animation: 150,
+            ghostClass: 'blue-background-class'
+        });
+    }
+})
+</script>
+
+<!-- script navbar -->
+<script src="{% static 'js/navbar-script.js' %}"></script>
+
+<!-- Custom Donut JS -->
+<!-- <script src="{% static 'js/donut-chart-script.js' %}"></script> -->
+
+<!-- Custom Column Chart JS -->
+<!-- <script src="{% static 'js/bar-chart-script.js' %}"></script> -->
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<form hx-encoding="multipart/form-data"
+        hx-post="{% url 'ledger_accounts:add-ledger' %}"
+        hx-target="#ledger"
+        >
+    {% csrf_token %}
+    {% include 'ledger/partials/ledger-fields.html' %}
+</form>

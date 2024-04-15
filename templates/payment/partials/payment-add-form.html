@@ -1,0 +1,7 @@
+<form hx-encoding="multipart/form-data"
+        hx-post="{% url 'loans:add-payment' %}"
+        hx-target="#payment"
+        >
+    {% csrf_token %}
+    {% include 'payment/partials/payment-fields.html' %}
+</form>

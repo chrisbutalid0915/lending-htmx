@@ -1,0 +1,53 @@
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 class="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">Recent Payment activity</h2>
+</div>
+<div class="mt-1 overflow-hidden border-t border-gray-100">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+        <table class="w-full text-left">
+        <thead class="sr-only">
+            <tr>
+            <th>Amount</th>
+            <th class="hidden sm:table-cell">Client</th>
+            <th>More details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr class="text-sm leading-6 text-gray-900">
+            <th scope="colgroup" colspan="3" class="relative isolate py-2 font-semibold">
+                <div class="absolute inset-y-0 right-full -z-10 w-screen border-b border-gray-200 bg-gray-50"></div>
+                <div class="absolute inset-y-0 left-0 -z-10 w-screen border-b border-gray-200 bg-gray-50"></div>
+            </th>
+            </tr> -->
+            {% for payment in payments %}
+            <tr>
+                <td class="relative py-5 pr-6">
+                    <div class="flex gap-x-6">
+                    <div class="flex-auto">
+                        <div class="flex items-start gap-x-3">
+                        <div class="text-sm font-medium leading-6 text-gray-900">{{ currency_sign }}{{ payment.amount }}</div>
+                        <div class="rounded-md py-1 px-2 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">{{ payment.get_payment_method_display }}</div>
+                        </div>
+                        <div class="mt-1 text-xs leading-5 text-gray-500">{{ payment.payment_date }} Payment Date</div>
+                    </div>
+                    </div>
+                    <div class="absolute bottom-0 right-full h-px w-screen bg-gray-100"></div>
+                    <div class="absolute bottom-0 left-0 h-px w-screen bg-gray-100"></div>
+                </td>
+                <td class="hidden py-5 pr-6 sm:table-cell">
+                    <div class="text-sm leading-6 text-gray-900">{{ payment.loan.client }}</div>
+                    <div class="mt-1 text-xs leading-5 text-gray-500">{{ payment.loan.client.occupation }}</div>
+                </td>
+                <td class="py-5 text-right">
+                    <div class="flex justify-end">
+                    <a href="#" class="text-sm font-medium leading-6 text-indigo-600 hover:text-indigo-500">View<span class="hidden sm:inline"> transaction</span><span class="sr-only">, invoice #00012, Reform</span></a>
+                    </div>
+                    <div class="mt-1 text-xs leading-5 text-black-500">Reference No. <span class="text-gray-900">{{ payment.payment_ref }}</span></div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<main>
+  <div class="relative isolate overflow-hidden">
+    <!-- Secondary navigation -->
+
+    <div class="">
+      <h3 class="text-base font-semibold leading-6 text-gray-900">Dashboard</h3>
+    </div>
+
+    
+
+    <!-- <header class="pb-4 pt-6 sm:pb-6">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
+        <h1 class="text-base font-semibold leading-7 text-gray-900">Cashflow</h1>
+        <div class="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+          <a href="#" class="text-indigo-600">Last 7 days</a>
+          <a href="#" class="text-gray-700">Last 30 days</a>
+          <a href="#" class="text-gray-700">All-time</a>
+        </div>
+        <a href="#" class="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <svg class="-ml-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M10.75 6.75a.75.75 0 00-1.5 0v2.5h-2.5a.75.75 0 000 1.5h2.5v2.5a.75.75 0 001.5 0v-2.5h2.5a.75.75 0 000-1.5h-2.5v-2.5z" />
+          </svg>
+          New invoice
+        </a>
+      </div>
+    </header> -->
+
+    <!-- Stats -->
+    <div class="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+      <dl class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:px-2 xl:px-0">
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8">
+          <dt class="text-sm font-medium leading-6 text-gray-500">Borrowers</dt>
+          
+          <dd class="d-flex w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="mr-1 bi bi-people-fill" viewBox="0 0 16 16">
+              <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+            </svg>
+
+            {{ form.total_borrowers }}
+          </dd>
+        </div>
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8 sm:border-l">
+          <dt class="text-sm font-medium leading-6 text-gray-500">Loan Releases</dt>
+          <dd class="d-flex w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="mr-1 bi bi-cash-stack" viewBox="0 0 16 16">
+              <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+              <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2z"/>
+            </svg>
+            {{ form.total_loan_release }}
+          </dd>
+        </div>
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8 lg:border-l">
+          <dt class="text-sm font-medium leading-6 text-gray-500">Payments</dt>
+          <dd class="d-flex w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="mr-1 bi bi-wallet-fill" viewBox="0 0 16 16">
+              <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v2h6a.5.5 0 0 1 .5.5c0 .253.08.644.306.958.207.288.557.542 1.194.542s.987-.254 1.194-.542C9.42 6.644 9.5 6.253 9.5 6a.5.5 0 0 1 .5-.5h6v-2A1.5 1.5 0 0 0 14.5 2z"/>
+              <path d="M16 6.5h-5.551a2.7 2.7 0 0 1-.443 1.042C9.613 8.088 8.963 8.5 8 8.5s-1.613-.412-2.006-.958A2.7 2.7 0 0 1 5.551 6.5H0v6A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5z"/>
+            </svg>
+            {{ form.total_payment }}
+          </dd>
+        </div>
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-10 sm:px-6 lg:border-t-0 xl:px-8 sm:border-l">
+          <dt class="text-sm font-medium leading-6 text-gray-500">Due Amount</dt>
+          <dd class="d-flex w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="mr-1 bi bi-exclamation-circle" viewBox="0 0 16 16">
+              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+              <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+            </svg>
+            {{ form.total_due_amount }}
+          </dd>
+        </div>
+      </dl>
+
+      <!-- <dl class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:px-2 xl:px-0">
+        <div class="w-80 rounded-lg overflow-hidden">
+          <canvas class="p-10" id="chartDoughnut"></canvas>
+        </div>    
+        
+          <div class="relative flex flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+           
+            <div class="pt-6 px-2 pb-0">
+              <div id="bar-chart"></div>
+            </div>
+          </div>
+        
+      </dl> -->
+
+    </div>
+
+    <div class="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
+      <dl class="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:px-2 xl:px-0">
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-1 sm:px-6 lg:border-t-0 xl:px-8">
+          <!-- <dt class="text-sm font-medium leading-6 text-gray-500">Borrowers</dt> -->
+          
+          <dd class="d-inline w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 flex justify-center items-center">
+
+            <div class="w-full max-w-full px-3 mt-0 lg:w-10/12 lg:flex-none p-1">
+              <h2 class="mx-auto max-w-2xl text-base font-semibold leading-6 text-gray-900 lg:mx-0 lg:max-w-none">Loan Release Overview</h2>
+  
+              <div id="chart-bar" 
+                  hx-get="{% url 'dashboard:bar-chart' %}" hx-trigger="load" hx-target="#chartBar" 
+                  class="pt-6 px-2 pb-0">
+                  {% render_field form.year hx-get="/bar-chart/" hx-target="#chartBar" class="w-20 px-2 bg-white block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" %}
+                <canvas  id="chartBar"  ></canvas>
+                
+              </div>
+            </div>
+
+          </dd>
+        </div>
+        <div class="flex items-baseline flex-wrap justify-between gap-y-2 gap-x-4 border-t border-gray-900/5 px-4 py-1 sm:px-6 lg:border-t-0 xl:px-8 sm:border-l">
+          <!-- <dt class="text-sm font-medium leading-6 text-gray-500">Loan Releases</dt> -->
+          <dd class="d-flex w-full flex-none text-3xl font-medium leading-10 tracking-tight text-gray-900 flex justify-center items-center">
+            
+            <div class="w-full max-w-full px-3 mt-0 lg:w-6/12 lg:flex-none p-1">
+              <div class="w-100 rounded-lg overflow-hidden">
+                <canvas id="chartDoughnut" hx-get="{% url 'dashboard:donut-chart' %}" hx-target="this" hx-trigger="load" class=""></canvas>
+              </div>
+            </div>
+    
+          </dd>
+        </div>
+      </dl>
+
+
+    </div>
+
+    <div class="absolute left-0 top-full -z-10 mt-96 origin-top-left translate-y-40 -rotate-90 transform-gpu opacity-20 blur-3xl sm:left-1/2 sm:-ml-96 sm:-mt-10 sm:translate-y-0 sm:rotate-0 sm:transform-gpu sm:opacity-50" aria-hidden="true">
+      <div class="aspect-[1154/678] w-[72.125rem] bg-gradient-to-br from-[#FF80B5] to-[#9089FC]" style="clip-path: polygon(100% 38.5%, 82.6% 100%, 60.2% 37.7%, 52.4% 32.1%, 47.5% 41.8%, 45.2% 65.6%, 27.5% 23.4%, 0.1% 35.3%, 17.9% 0%, 27.7% 23.4%, 76.2% 2.5%, 74.2% 56%, 100% 38.5%)"></div>
+    </div>
+  </div>
+
+  {% include 'dashboard/partials/recent-activity.html' %}
+
+</main>
+
+<!-- Custom Donut JS -->
+<script src="{% static 'js/donut-chart-script.js' %}"></script>
+
+<!-- Custom Column Chart JS -->
+<script src="{% static 'js/bar-chart-script.js' %}"></script>
+
+{% endblock content %}
+
