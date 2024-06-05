@@ -9,14 +9,6 @@ from django.views.generic.list import ListView
 
 
 class Login(LoginView):
-    # login_url = "users:login"
-    # template_name = "dashboard/dashboard.html"
-
-    # redirect_field_name = "dashboard:dashboard"
-
-    # def get_queryset(self):
-    #     return None
-
     def post(self, request):
         username = request.POST["username"]
         password = request.POST["password"]

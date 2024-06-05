@@ -42,9 +42,6 @@ class LoanForm(DynamicFormMixin, forms.ModelForm):
             "terms",
             "loan_amount",
             "interest_amount",
-            # "approval_date",
-            # "maturity_date",
-            # "status"
         )
 
         widgets = {

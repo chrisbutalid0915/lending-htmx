@@ -10,7 +10,4 @@ class CollectorForm(DynamicFormMixin, forms.ModelForm):
             "full_name",
             "contact_no",
             "is_active",
-            # "approval_date",
-            # "maturity_date",
-            # "status"
         )

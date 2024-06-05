@@ -33,7 +33,7 @@ def generate_amortization_schedule(loan: Loan):
 
         round_off_balance = Decimal(balance).quantize(
             Decimal("0.00"), rounding=ROUND_HALF_UP
-        )  # rounding off
+        )
 
         if -1 < round_off_balance < 1:  # remove zero negative
             round_off_balance = abs(round_off_balance)
@@ -53,7 +53,7 @@ def generate_amortization_schedule(loan: Loan):
                 "running_balance": balance,
             }
         )  # append to list
-    # print(amortization_schedule)
+        
     return amortization_schedule
 
 

@@ -15,8 +15,6 @@ def merge_terms(terms, interest_rate, status):
                 ),  # Convert 'true' to True, 'false' to False
             }
         )
-
-    # print(merged_list)
     return merged_list
 
 

@@ -67,11 +67,6 @@ LOCAL_APPS = [
     "apps.common",
     "apps.dashboard",
     "apps.loans",
-    # 
-    # 
-    # ,
-    # 
-    
     "apps.collectors",
 ]
 

@@ -69,7 +69,6 @@ class UpdateLoanForm(LoginRequiredMixin, FormView):
     def get(self, request, pk):
         print("load loan update page")
         loan = get_object_or_404(Loan, pk=pk)
-        # loan = Loan.objects.get(pk=pk)
         form = LoanForm(request.POST or None, instance=loan)
         search_client= loan.client
         
@@ -185,8 +184,6 @@ def loan_page(request, page):
     # setup pagination
     p = Paginator(loans, settings.PAGINATE_BY)
     loans = p.get_page(page)
-    # for l in loans:
-    #     print(l.total_paid_interest)
     total_records = p.count  # count total records
 
     context = {"loans": loans, "total_records": total_records}
@@ -203,7 +200,6 @@ def calculate_interest_amount(request):
     if loan_amount:
         loan_amount = Decimal(loan_amount)
         interest_amount = calculate_loan_interest(interest_rate, terms, loan_amount)
-    # print(interest_amount)
     context = {"interest_amount": interest_amount}
     return render(request, "loan/partials/loan-interest-amount.html", context)
 
@@ -264,12 +260,7 @@ def update_loan(request, pk):
     if form.is_valid():
         if current_record.status == "pending":
             form.save()
-            # loans = Loan.objects.all()
-            # total_records = loans.count()  # count total records
-            # context = {"loans": loans, "total_records": total_records}
             message = "Record updated..."
-            # messages.success(request, "Record updated...")
-            # return render(request, "loan/partials/loan-list.html", context)
         elif current_record.status == "approved":
             message = "Loan is already approved..."
         elif current_record.status == "cancelled":
@@ -295,14 +286,8 @@ def approve_loan(request, pk):
     message = ""
     
     if current_record.status == "pending":
-        # loan_status = LoanStatus.objects.get(status_name="Approved")
-        # if loan_status:
         current_record.status = "approved"
         current_record.save()
-        # amortization_schedule = generate_amortization_schedule(current_record)
-        # LoanAmortization.objects.bulk_create(
-        #     amortization_schedule
-        # )  # bulk create amortization schedule
         message = "Loan Approved..."
     elif current_record.status == "approved":
         message = "Loan is already approved..."
@@ -427,14 +412,10 @@ def add_loan_product(request):
     terms = dict(request.POST)["terms"]
     interest_rate = dict(request.POST)["interest_rate"]
     status = dict(request.POST)["status"]
-    # print(terms)
-    # print(interest_rate)
-    # print(status)
     if form.is_valid():
         form.save()
         current_product = LoanProduct.objects.get(loan_product=loan_product_name)
         product_terms = merge_terms(terms, interest_rate, status)
-        # print(product_terms)
 
         # create product terms
         bulk_create_product_terms = []
@@ -451,12 +432,7 @@ def add_loan_product(request):
 
         # Before bulk_create auto create for ledger account
         pre_bulk_create_signal.send(sender=LoanTerm, objects=bulk_create_product_terms)
-
         LoanTerm.objects.bulk_create(bulk_create_product_terms)
-
-        # # Post bulk_create auto create for ledger account
-        # post_bulk_create_signal.send(sender=LoanTerm, objects=bulk_create_product_terms, created=True)
-
         loan_products = LoanProduct.objects.all()
         total_records = loan_products.count()  # count total records
 
@@ -531,7 +507,6 @@ def add_loan_product_terms(request):
     interest_rate = [0 for _ in terms_months]
     status = ["" for _ in terms_months]
     loan_terms = merge_terms(terms, interest_rate, status)
-    # print(loan_terms)
     context = {"loan_terms": loan_terms, "terms": terms}
     return render(
         request, "loan_product/partials/loan-product-list-terms.html", context
@@ -560,10 +535,7 @@ def payment_page(request, page):
 def add_payment(request):
     print("add payment")
     form = PaymentForm(request.POST or None)
-    # loan = request.POST.get("loan")
-    # payment = request.POST.get("amount")
 
-    # print(form)
     if form.is_valid():
         form.save()
 
@@ -610,7 +582,6 @@ def update_loan_product_terms(request, pk):
         status = ["" for _ in terms_months]
         loan_terms = merge_terms(terms, interest_rate, status)
 
-    # print(loan_terms)
     context = {"loan_terms": loan_terms, "terms": terms}
     return render(
         request, "loan_product/partials/loan-product-list-terms.html", context

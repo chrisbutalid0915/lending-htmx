@@ -75,10 +75,7 @@ def collector_page(request, page):
 def add_collector(request):
     print("add collector")
     form = CollectorForm(request.POST or None)
-    # loan = request.POST.get("loan")
-    # payment = request.POST.get("amount")
 
-    # print(form)
     if form.is_valid():
         form.save()
 

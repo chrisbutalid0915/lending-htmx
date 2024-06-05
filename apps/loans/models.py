@@ -12,7 +12,6 @@ from .utils import (
 
 # Create your models here.
 
-
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -61,7 +60,7 @@ class LoanTerm(TimeStampedModel):
     )
     terms = models.IntegerField(
         choices=TermsMonths.choices
-    )  # models.PositiveIntegerField()
+    )
     interest_rate = models.DecimalField(max_digits=5, decimal_places=2)
     ledger_account = models.ForeignKey(
         LedgerAccount, on_delete=models.CASCADE, null=True
@@ -75,8 +74,6 @@ class LoanTerm(TimeStampedModel):
                 ledger_type="income",
                 account_title="Interest - " + self.loan_product,
             )
-
-            # print(ledger_account)
 
             self.ledger_account = ledger_account
         super().save(*args, **kwargs)
@@ -121,16 +118,14 @@ class Loan(TimeStampedModel):
         total = 0
         payments = Payment.objects.filter(loan=self.id).select_related("transaction")
         for p in payments:
-            # print(p.transaction.id, self.terms.ledger_account)
             transaction_entry = TransactionEntry.objects.filter(
                 transaction=p.transaction.id,
                 entry_type="d",
                 ledger_account=self.terms.ledger_account,
             )
-            # print(transaction_entry)
+            
             if transaction_entry:
                 total += transaction_entry[0].amount
-                # print(transaction_entry.amount)
 
         return total
 
@@ -167,10 +162,7 @@ class Loan(TimeStampedModel):
 
         self.transaction = transaction
 
-        # start
-        # create transaction entry for debit and credit
-        # create cash disbursement
-
+        # create transaction entry for debit, credit, and cash disbursement
         TransactionEntry.objects.update_or_create(
             transaction=transaction,
             entry_type="d",
@@ -196,9 +188,6 @@ class Loan(TimeStampedModel):
             defaults={"amount": self.interest_amount},
         )
 
-        # end
-        # return transaction
-
     def save(self, *args, **kwargs):
         if not self.loan_number:  # check if the instance is being created
             self.loan_number = str(uuid.uuid4().hex)[:12].upper()
@@ -207,9 +196,11 @@ class Loan(TimeStampedModel):
             self.loan_terms = self.terms.terms
             self.interest_rate = self.terms.interest_rate  # insert interest_rate
             interest_rate = self.interest_rate / 100
+
+            # calculate monthly payment
             self.monthly_payment = calculate_loan_payment(
                 interest_rate, self.loan_terms, self.loan_amount
-            )  # calculate monthly payment
+            )  
 
         if self.status == "approved":  # loan approval
             self.approval_date = datetime.now()
@@ -232,9 +223,6 @@ class Loan(TimeStampedModel):
             self.interest_amount = calculate_loan_interest(
                 interest_rate, terms, loan_amount
             )
-
-        # if not self.transaction or self.status == "pending":
-        #     self.transaction = self.create_update_transaction()
 
         super().save(*args, **kwargs)
 
@@ -275,7 +263,6 @@ class Payment(TimeStampedModel):
             "cash",
             "Cash",
         )
-        # credit_card = "credit_card", "Credit Card"
 
     transaction = models.OneToOneField(
         Transaction, null=True, blank=True, on_delete=models.CASCADE
@@ -318,7 +305,6 @@ class Payment(TimeStampedModel):
         transaction_type = "or"
         to_pay_interest_amount = 0
         to_pay_principal_amount = 0
-        # create a transaction for loan
         transaction = Transaction.objects.create(
             transaction_no=self.transaction, transaction_type=transaction_type
         )
@@ -344,7 +330,6 @@ class Payment(TimeStampedModel):
         self.transaction = transaction
 
         # create debit entry for interest
-
         if remaining_balance_interest_amount > 0:
             TransactionEntry.objects.update_or_create(
                 transaction=transaction,

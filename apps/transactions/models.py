@@ -26,8 +26,6 @@ class Transaction(TimeStampedModel):
     def save(self, *args, **kwargs):
         if not self.transaction_no:
             last_transaction = Transaction.objects.order_by("-transaction_no").first()
-            # print("Transaction")
-            # print(last_transaction)
             if last_transaction:
                 self.transaction_no = last_transaction.transaction_no + 1
             else:
