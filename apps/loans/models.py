@@ -24,11 +24,7 @@ class TimeStampedModel(models.Model):
 class LoanProduct(TimeStampedModel):
     loan_product = models.CharField(max_length=150, unique=True)
     description = models.TextField(null=True, blank=True)
-    # interest = models.IntegerField(null=True, blank=True)
     penalty = models.IntegerField(null=True, blank=True)
-    # max_loan_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    # max_terms = models.PositiveIntegerField()
-    # terms = models.JSONField(null=True)
 
     ledger_account = models.ForeignKey(
         LedgerAccount, on_delete=models.CASCADE, null=True

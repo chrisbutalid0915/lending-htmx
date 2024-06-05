@@ -12,6 +12,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime
 from django.db.models import Sum
 from django.db.models.functions import ExtractMonth
+from datetime import datetime
 
 
 def generate_amortization_schedule(loan: Loan):
@@ -150,9 +151,13 @@ def get_loan_release_per_year(year):
 def get_year_min():
     status = Loan.LoanStatus.released
     loan_release = Loan.objects.filter(status=status).order_by('release_date').first()
-    return loan_release.release_date.year
+    if loan_release:
+        return loan_release.release_date.year
+    return datetime.now().year
 
 def get_year_max():
     status = Loan.LoanStatus.released
     loan_release =  Loan.objects.filter(status=status).order_by('-release_date').first()
-    return loan_release.release_date.year
+    if loan_release:
+        return loan_release.release_date.year
+    return datetime.now().year

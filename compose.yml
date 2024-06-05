@@ -6,19 +6,17 @@ services:
     volumes:
       - .:/app
     environment:
-      ENV_FILE: .env.local
-    depends_on:
-      - db
+      ENV_FILE: .env
 
-  db:
+  postgres:
     image: postgres:15
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: app_db
+      POSTGRES_DB: lending
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_lending:/var/lib/postgresql/data
 
 volumes:
-    db_data:
+    db_lending:

@@ -60,13 +60,18 @@ THIRD_PARTY_APPS = [
     "constance.backends.database",
 ]
 LOCAL_APPS = [
-    "apps.common",
-    "apps.dashboard",
     "apps.users",
     "apps.clients",
-    "apps.loans",
-    "apps.transactions",
     "apps.ledger_accounts",
+    "apps.transactions",
+    "apps.common",
+    "apps.dashboard",
+    "apps.loans",
+    # 
+    # 
+    # ,
+    # 
+    
     "apps.collectors",
 ]
 

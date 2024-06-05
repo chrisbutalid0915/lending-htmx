@@ -3,7 +3,7 @@ from django.db.models import Sum
 from apps.clients.models import Client
 from apps.loans.models import Loan, Payment, LoanAmortization
 from datetime import datetime
-from apps.loans.services import get_total_loan_release, get_total_payment, get_total_due_amount, get_year_min, get_year_max
+from apps.loans.services import get_total_loan_release, get_total_payment, get_total_due_amount
 from dynamic_forms import DynamicField, DynamicFormMixin
 
 
@@ -38,8 +38,8 @@ class TotalDueAmountWidget(forms.Widget):
 
 class YearSelectWidget(forms.Select):
     def __init__(self, attrs=None):
-        start_year = get_year_min()
-        max_year = get_year_max() + 1
+        start_year = datetime.now().year #get_year_min()
+        max_year = datetime.now().year + 1 #get_year_max() + 1
 
         years = [year for year in range(start_year, max_year)]  # Adjust the range of years as needed
         choices = [(year, str(year)) for year in years]
@@ -55,10 +55,10 @@ class DashboardForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['year'].choices = self.get_year_choices()
+        self.fields['year'].choices = datetime.now().year # self.get_year_choices()
 
     def get_year_choices(self):
-        start_year = get_year_min()
-        max_year = get_year_max() + 1
+        start_year = datetime.now().year #get_year_min()
+        max_year = datetime.now().year + 1 #get_year_max() + 1
         years = [(year, str(year)) for year in range(start_year, max_year)]  # Adjust the range of years as needed
         return years
